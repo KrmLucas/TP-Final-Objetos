@@ -8,7 +8,7 @@ public class Bonus extends Elemento {
 
 	//TODO: limitar el random en funcion de las dimensiones del escenario
 	public Bonus (){
-		super (rand.nextDouble(), rand.nextDouble(), 5, 5); //posicion aleatoria y tamaño by default
+		super (rand.nextInt(), rand.nextInt(), 5, 5); //posicion aleatoria y tamaño by default
 		this.tiempoDeVida = 5000; //son 5 segundos. Es para poder hacer un delay quizas con thread.sleep() o wait()
 	}
 
@@ -26,12 +26,6 @@ public class Bonus extends Elemento {
 
 	@Override
 	public void chocarContra(Elemento elemento) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void estaVivo() {
 		// TODO Auto-generated method stub
 		
 	}

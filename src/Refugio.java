@@ -5,7 +5,7 @@ public class Refugio extends Elemento{
 	
 	public Refugio (){
 		//TODO: ver como se resuelve que no se choquen los refugios de los diferentes equipos
-		super(5, 5, 5, 5); 
+		super(); 
 		this.personas = 0;
 	}
 
@@ -32,12 +32,6 @@ public class Refugio extends Elemento{
 
 	@Override
 	public void chocarContra(Elemento elemento) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void estaVivo() {
 		// TODO Auto-generated method stub
 		
 	}

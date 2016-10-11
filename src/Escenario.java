@@ -1,88 +1,105 @@
-
 import java.util.ArrayList;
 
 public class Escenario {
 
+	private static Escenario escenario;
 	private ArrayList<Elemento> elementos;
-	private static Escenario escenario; 
-	public double ancho;
-	public double alto;
-
+	private int ancho;
+	private int alto;
+	
+	private Escenario(){
+		
+		this.elementos = new ArrayList<Elemento>();
+		this.alto = Config.ESCENARIO_ALTO;
+		this.ancho = Config.ESCENARIO_ANCHO;
+	}
 	
 	public static Escenario getEscenario(){
+		
 		if (escenario == null){
-			escenario = new Escenario(100, 100);
+			escenario = new Escenario();
 		}
 		return escenario;
 	}
+	
+	/**
+	 * Método que crea los elementos que intervendrán en el juego y administra la dinámica del mismo
+	 */
+	public void iniciarJuego(){
+		
+		crearElementos();
+		
+		while(true){
+		 
+			turnos();
+			
+			verficarChoques();
+			
+			depurarElementos();
+			
+			mostrar();
+		}		
+	}
 
-	private Escenario (double alto, double ancho){
-		this.alto = alto; 
-		this.ancho = ancho;
+	// Crea los elementos que intervendrán en el juego y los agrega a la lista de elementos
+	private void crearElementos() {
+
+		
 	}
 	
-	// Metodos get y set
-	public ArrayList<Elemento> getElementos() {
-		return elementos;
+	// Muestra el estado de cada elemento en el escenario
+	private void mostrar() {
+		
+		
 	}
 
-	public void setElementos(ArrayList<Elemento> elementos) {
-		this.elementos = elementos;
+	//Saca el elemento de la lista si no está vivo
+	private void depurarElementos() {
+		for(int i=0; i<this.elementos.size();i++){
+			Elemento e1 = this.elementos.get(i);
+			if (!e1.estaVivo()){
+				this.elementos.remove(i);
+			}
+		}
 	}
 
-	public double getAncho() {
+	private void verficarChoques() {
+		for(int i=0; i<this.elementos.size();i++){
+			Elemento e1 = this.elementos.get(i);
+			
+			for(int j=i+1; j<this.elementos.size(); j++){
+				Elemento e2 = this.elementos.get(j);
+				
+				
+				// ver si se chocaron -> ver Rectangle
+				
+				//e1.chocar(e2);
+				//e2.chocar(e1);
+				
+			}
+			
+			
+			
+		}
+	
+	}
+
+
+
+
+	private void turnos() {
+		for(int i=0; i<this.elementos.size(); i++){
+			Elemento elemento = this.elementos.get(i);
+			
+			elemento.jugar();
+		}
+	}
+
+	public int getAncho() {
 		return ancho;
 	}
 
-	public double getAlto() {
+	public int getAlto() {
 		return alto;
 	}
 }
-
-
-
-/*public void iniciarJuego(){
-	
-	crearElementos();
-	
-	while(true){
-	 
-		turnos();
-		
-		verficarChoques();
-		
-		depurarElementos();
-	}		
-}
-
-private void depurarElementos() {
-	// TODO Auto-generated method stub
-	
-}
-
-private void verficarChoques() {
-	for(int i=0; i<this.elementos.size();i++){
-		Elemento e1 = this.elementos.get(i);
-		
-		for(int j=i+1; j<this.elementos.size(); j++){
-			Elemento e2 = this.elementos.get(j);
-				
-			// ver si se chocaron -> ver Rectangle
-			
-			e1.chocarContra(e2);
-			e2.chocarContra(e1);	
-		}		
-	}	
-}
-
-private void turnos() {
-	for(int i=0; i<this.elementos.size(); i++){
-		Elemento elemento = this.elementos.get(i);		
-		elemento.jugar();
-	}
-}
-private void crearElementos() {
-
-	this.elementos = new ArrayList<Elemento>();
-}*/ 
-

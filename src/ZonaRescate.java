@@ -4,7 +4,7 @@ public class ZonaRescate extends Elemento{
 	private int personas;
 	
 	public ZonaRescate() {
-		super (5, 5, 5, 5);
+		super ();
 		this.personas = 10;
 	}
 	
@@ -38,11 +38,4 @@ public class ZonaRescate extends Elemento{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void estaVivo() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -1,28 +1,28 @@
 
 public class Tamanio {
 
-	private double ancho;
-	private double alto;
+	private int ancho;
+	private int alto;
 	
 	
-	public Tamanio (double ancho, double alto){
+	public Tamanio (int ancho, int alto){
 		this.alto = alto;
 		this.ancho = ancho;
 	}
 
-	public double getAncho() {
+	public int getAncho() {
 		return ancho;
 	}
 
-	public void setAncho(double ancho) {
+	public void setAncho(int ancho) {
 		this.ancho = ancho;
 	}
 
-	public double getAlto() {
+	public int getAlto() {
 		return alto;
 	}
 
-	public void setAlto(double alto) {
+	public void setAlto(int alto) {
 		this.alto = alto;
 	}
 	

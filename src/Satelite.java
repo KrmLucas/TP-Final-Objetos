@@ -11,7 +11,7 @@ public class Satelite extends Elemento implements RadarListener {
 	
 	//Constructor
 	public Satelite (){
-		super(1, 1, 1, 1); //TODO: resolver como se setean posicion y tamaño
+		super(); //TODO: resolver como se setean posicion y tamaño
 		this.cantidadMuniciones = 10;
 		this.nivelEscudo = 10;
 		this.radar = new Radar();
@@ -48,17 +48,11 @@ public class Satelite extends Elemento implements RadarListener {
 	@Override
 	public void chocarContra(Elemento elemento) {
 		// TODO: 
-		if (elemento instanceof Misil || elemento instanceof Bomba) {
+		if (elemento instanceof Municion || elemento instanceof Bomba) {
 			this.setNivelEscudo(this.getNivelEscudo()-1);
 		}
 	}
 
-	@Override
-	public boolean estaVivo() {
-		return this.nivelEscudo > 0;	
-	}
-	
-	
 	//Métodos get y set
 	public Radar getRadar() {
 		return radar;
