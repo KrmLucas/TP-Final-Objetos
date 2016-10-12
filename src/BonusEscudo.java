@@ -6,6 +6,25 @@ public class BonusEscudo extends Bonus{
 	public BonusEscudo (){
 		super();
 		this.escudo = 5;
+	}
+	
+	@Override
+	public void jugar() {
+		if(this.estaVivo())
+			this.setTiempoDeVida(getTiempoDeVida()- 1);
+		if (this.getTiempoDeVida() == 0)
+			this.destruir();
+	}
+	
+	@Override
+	public void chocarContra(Elemento elemento) {
 		
+		if (elemento instanceof Municion | elemento instanceof Robot){
+				this.destruir();
+			}
+	}
+
+	public int getEscudo(){
+		return escudo;
 	}
 }

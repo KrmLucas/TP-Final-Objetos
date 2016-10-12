@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Escenario {
@@ -70,27 +71,25 @@ public class Escenario {
 			for(int j=i+1; j<this.elementos.size(); j++){
 				Elemento e2 = this.elementos.get(j);
 				
+				Rectangle r1 = new Rectangle(e1.getPosicion().getX(), e1.getPosicion().getY(),
+											e1.getTamanio().getAncho(), e1.getTamanio().getAlto());
 				
-				// ver si se chocaron -> ver Rectangle
+				Rectangle r2 = new Rectangle(e2.getPosicion().getX(), e2.getPosicion().getY(),
+											e2.getTamanio().getAncho(), e2.getTamanio().getAlto());
 				
-				//e1.chocar(e2);
-				//e2.chocar(e1);
-				
-			}
-			
-			
-			
+				if (r1.intersects(r2)){
+					e1.chocarContra(e2);
+					e2.chocarContra(e1);
+				}
+
+			}			
 		}
 	
 	}
 
-
-
-
 	private void turnos() {
 		for(int i=0; i<this.elementos.size(); i++){
 			Elemento elemento = this.elementos.get(i);
-			
 			elemento.jugar();
 		}
 	}

@@ -6,8 +6,8 @@ public class Tamanio {
 	
 	
 	public Tamanio (int ancho, int alto){
-		this.alto = alto;
 		this.ancho = ancho;
+		this.alto = alto;
 	}
 
 	public int getAncho() {

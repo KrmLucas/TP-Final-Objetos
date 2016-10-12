@@ -33,7 +33,8 @@ public class Municion extends Movible{
 	 */
 	public void avanzar() {
 		
-		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), this.getDireccion(), Config.MUNICION_VELOCIDAD));
+		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
+							this.getDireccion(), Config.MUNICION_VELOCIDAD));
 		
 	}
 

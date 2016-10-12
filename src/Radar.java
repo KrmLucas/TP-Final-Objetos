@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 import java.lang.Math;
 
@@ -30,8 +29,8 @@ public class Radar {
 		ArrayList<Elemento> detectados = new ArrayList<Elemento>();
 		
 		// armamos zona de deteccion.
-		Posicion aux = new Posicion(Math.cos(anguloApertura/2) * alcance, //dx
-									Math.sin(anguloApertura/2) * alcance); //dy
+		Posicion aux = new Posicion((int)(Math.cos(Math.toRadians(anguloApertura/2) * alcance)), //dx
+									(int)(Math.sin(Math.toRadians(anguloApertura/2) * alcance))); //dy
 		
 		//TODO: resolver correctamente 
 		for(Elemento e : Escenario.getEscenario().getElementos()) {
