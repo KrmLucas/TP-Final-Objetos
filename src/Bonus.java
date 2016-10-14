@@ -8,7 +8,7 @@ public abstract class Bonus extends Elemento {
 
 	//TODO: limitar el random en funcion de las dimensiones del escenario
 	public Bonus (){
-		super (); //posicion aleatoria y tamaño by default
+		super (); 
 		this.tiempoDeVida = 50; // cantidad de turnos
 		Posicion posicion = new Posicion(rand.nextInt(), rand.nextInt());
 		Tamanio tamanio = new Tamanio(Config.BONUS_ANCHO, Config.BONUS_ALTO);

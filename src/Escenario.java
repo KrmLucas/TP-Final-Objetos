@@ -94,6 +94,18 @@ public class Escenario {
 		}
 	}
 
+	public ArrayList<Elemento> getElementos() {
+		return elementos;
+	}
+
+	public void addElemento(Elemento elemento){
+		this.elementos.add(elemento);
+	}
+	
+	public void removeElemento(Elemento elemento){
+		this.elementos.remove(elemento);
+	}
+	
 	public int getAncho() {
 		return ancho;
 	}

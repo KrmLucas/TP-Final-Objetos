@@ -19,7 +19,7 @@ public class BonusBateria extends Bonus {
 	@Override
 	public void chocarContra(Elemento elemento) {
 		
-		if (elemento instanceof Municion | elemento instanceof Robot){
+		if (elemento instanceof Municion | elemento instanceof Robot |elemento instanceof Bomba){
 			this.destruir();
 		}
 	}
