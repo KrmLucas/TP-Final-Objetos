@@ -17,8 +17,8 @@ public class Satelite extends Elemento implements RadarListener {
 		this.radar = new Radar();
 	}
 	
-	public void disparar (){
-		//TODO: definir que es una munición si bomba o misíl y como se define la dirección
+	//TODO: ver como se define la direccion del disparo (a partir de la posicion del elemento que recibo)
+	public void disparar (Elemento e){
 		this.setCantidadMuniciones(this.getCantidadMuniciones()-1);
 	}
 	
@@ -26,7 +26,14 @@ public class Satelite extends Elemento implements RadarListener {
 	@Override
 	public void elementosDetectados(ArrayList<Elemento> elementos) {
 
-		System.out.println("Satelite detecto elementos");
+		for (Elemento e : elementos){
+			//TODO: ver tema equipos -> si robot es de mi equipo no le tiro
+			if (e instanceof Bonus){
+				this.disparar(e);
+			}else if (e instanceof Robot){
+				this.disparar(e);
+			}
+		}
 	}
 
 	
