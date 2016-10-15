@@ -3,44 +3,61 @@ import java.util.ArrayList;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.lang.Math;
-
+/**
+ * Clase que define el objeto Radar que permitirá a los objetos que lo posean escanear una determinada zona del 
+ * Escenario y así detectar otros objetos que haya en el.
+ * @author Krmpotic-Saiegg
+ *
+ */
 public class Radar {
 
 	
 	private double anguloApertura;
 	private double alcance;
 	private double direccion;
+	private Elemento dueño;
 	private ArrayList<RadarListener> listeners;
 	
-	public Radar(){
+	/**
+	 * Constructor de la clase. Recibe como parametro el elemento que será su dueño (Radar o Satelite)
+	 * @param elemento
+	 */
+	public Radar(Elemento elemento){
 		this.listeners = new ArrayList<RadarListener>();
-		this.anguloApertura = 40;
-		this.alcance = 10;
-		this.direccion = 40;
+		this.anguloApertura = Config.RADAR_ANGULO_APERTURA;
+		this.alcance = Config.RADAR_ALCANCE_MIN;
+		this.direccion = Config.RADAR_DIRECCION;
+		this.dueño = elemento;
 		
 	}
 	
-	public void escanear(Posicion miposicion){
+	/**
+	 *Método para detectar otros objetos del escenario que esten dentro de la zona de detección del Radar.
+	 *El método hace uso de las clases Rectangle y Polygon (nativas de Java) y aprovecha el método intersects
+	 *de la interface shape que ambas implementan. 
+	 */
+	public void escanear(){
 		
 		ArrayList<Elemento> detectados = new ArrayList<Elemento>();
 		
 		// armamos zona de deteccion.
 		Polygon zonaDeteccion = new Polygon();
-		zonaDeteccion.addPoint(miposicion.getX(), miposicion.getY());
+		zonaDeteccion.addPoint(this.getDueño().getPosicion().getX(), 
+							   this.getDueño().getPosicion().getY());
 		
 		for (double i = (this.getDireccion() - (this.getAnguloApertura()/2)); 
-					i< (this.getDireccion() + (this.getAnguloApertura()/2));
-					i++){
+					 i< (this.getDireccion() + (this.getAnguloApertura()/2));
+					 i++){
 			
 			zonaDeteccion.addPoint((int)(Math.cos(Math.toRadians(i) * this.getAlcance())), 
-									(int)(Math.sin(Math.toRadians(i) * this.getAlcance())));
+								   (int)(Math.sin(Math.toRadians(i) * this.getAlcance())));
 		}
 
 		
 		for(Elemento e : Escenario.getEscenario().getElementos()) {
 			
-			Rectangle r = new Rectangle(e.getPosicion().getX(), e.getPosicion().getY(),
-					e.getTamanio().getAncho(), e.getTamanio().getAlto());
+			Rectangle r = new Rectangle (e.getPosicion().getX(), e.getPosicion().getY(),
+										 e.getTamanio().getAncho(), e.getTamanio().getAlto());
 			
 			if (zonaDeteccion.intersects(r)){
 				detectados.add(e);
@@ -76,7 +93,14 @@ public class Radar {
 	}
 
 	public void setAlcance(double alcance) {
-		this.alcance = alcance;
+		if (Config.RADAR_ALCANCE_MIN <= alcance && alcance <= Config.RADAR_ALCANCE_MAX){
+			this.alcance = alcance;
+		}else if(Config.RADAR_ALCANCE_MIN > alcance){
+			this.alcance = Config.RADAR_ALCANCE_MIN;
+		}else{
+			this.alcance = Config.RADAR_ALCANCE_MAX;
+		}
+			
 	}
 
 	public double getDireccion() {
@@ -86,7 +110,11 @@ public class Radar {
 	public void setDireccion(double direccion) {
 		this.direccion = direccion;
 	}
-	
+
+	public Elemento getDueño() {
+		return dueño;
+	}
+
 	public ArrayList<RadarListener> getListeners() {
 		return listeners;
 	}

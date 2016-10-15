@@ -1,4 +1,8 @@
-
+/**
+ * Clase creada para manejar las posiciones de los Elementos dentro del Escenario como coordenadas x, y 
+ * @author Krmpotic-Saiegg
+ *
+ */
 public class Posicion {
 
 	private int x;
@@ -11,12 +15,12 @@ public class Posicion {
 	}
 	
 	//Comparadores de posicion
-	public boolean mayor (Posicion elemento){
+	/*public boolean mayor (Posicion elemento){
 		return (this.getY() >= elemento.getX() && this.getY() >= elemento.getY());
 	}
 	public boolean menor(Posicion elemento){
 		return(this.getX() <= elemento.getX() && this.getY() <= elemento.getY());
-	}
+	}*/
 
 	public int getX() {
 		return x;
@@ -32,7 +36,6 @@ public class Posicion {
 
 	public void setY(int y) {
 		this.y = y;
-
 	}	
 
 	@Override

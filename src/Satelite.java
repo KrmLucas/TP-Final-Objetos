@@ -1,24 +1,38 @@
 
 import java.util.ArrayList;
 
-//TODO: revisar la necesidad o no de implementar la interface, teniendo en cuenta que el Radar ya la detecta.  
-
+/**
+ * Clase que define el concepto Satelite.  
+ * @author Krmpotic-Saiegg
+ *
+ */
 public class Satelite extends Elemento implements RadarListener {
 
 	private Radar radar;
 	private int nivelEscudo;
 	private int cantidadMuniciones;
 	
-	//Constructor
+	/**
+	 * Constructor de la clase. 
+	 */
 	public Satelite (){
-		super(); //TODO: resolver como se setean posicion y tamaño
+		super(); 
 		this.cantidadMuniciones = 10;
-		this.nivelEscudo = 10;
-		this.radar = new Radar();
+		this.nivelEscudo = Config.SATELITE_ESCUDOS;
+		this.radar = new Radar(this);
+		this.getTamanio().setAlto(Config.SATELITE_ALTO);
+		this.getTamanio().setAncho(Config.SATELITE_ANCHO);
 	}
 	
-	//TODO: ver como se define la direccion del disparo (a partir de la posicion del elemento que recibo)
+	/**
+	 * El método disparar recibe como parametro el elemento "objetivo" y se lo pasa al constructor de Municion
+	 * para que al crearse la misma se calcule la direccion del disparo. Ademas incorpora el elemento Municion 
+	 * al Escenario y decrementa la cantidad de municiones.
+	 * @param e
+	 */
 	public void disparar (Elemento e){
+		Municion m = new Municion(e);
+		Escenario.getEscenario().addElemento(m);
 		this.setCantidadMuniciones(this.getCantidadMuniciones()-1);
 	}
 	
@@ -37,11 +51,13 @@ public class Satelite extends Elemento implements RadarListener {
 	}
 
 	
-	//Implementacion de los metodos heredados de la clase abstracta Elemento
+	/**
+	 * Implementacion de los metodos heredados de la clase abstracta Elemento
+	 */
 	@Override
 	public void jugar() {
 		
-		this.getRadar().escanear(this.getPosicion());
+		this.getRadar().escanear();
 		
 		/*TODO: if elemento detectado ==> disparar municion*/
 	}
@@ -51,16 +67,22 @@ public class Satelite extends Elemento implements RadarListener {
 		// TODO Auto-generated method stub
 		
 	}
-
+	/**
+	 * El satelite solo debe estar atento a los choques con Municiones o Bombas, situacion en la cual decrementa
+	 * su nivel de escudo.
+	 * TODO: ver como manejar el "daño" (cantidad de unidades en la que se decrementa el nivel de escudo) 
+	 */
 	@Override
 	public void chocarContra(Elemento elemento) {
-		// TODO: 
 		if (elemento instanceof Municion || elemento instanceof Bomba) {
 			this.setNivelEscudo(this.getNivelEscudo()-1);
 		}
 	}
 
-	//Métodos get y set
+	/**
+	 * Métodos get y set
+	 * 
+	 */
 	public Radar getRadar() {
 		return radar;
 	}

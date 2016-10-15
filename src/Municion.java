@@ -15,7 +15,7 @@ public class Municion extends Movible{
 	 * Constructor
 	 * 
 	 */
-	private Municion(){
+	private Municion(Elemento objetivo){
 		super();
 		this.setPosicion(Calculos.Centro(this.elemento));
 		this.setTamanio(new Tamanio(Config.MUNICION_ANCHO ,Config.MUNICION_ALTO));

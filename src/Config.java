@@ -23,6 +23,7 @@ public class Config {
 	// ZonaRescate
 	public static final int ZONA_ANCHO = 30;
 	public static final int ZONA_ALTO = 30;
+	public static final int ZONA_CANT_PERS = 100;
 	
 	// Bonus
 	public static final int BONUS_ANCHO = 10;
@@ -41,8 +42,9 @@ public class Config {
 	public static final int BOMBA_DANIO = 5;
 		
 	// Radar
-	//public static final int RADAR_ALCANCE_MAX = 200;
-	//public static final int RADAR_ALCANCE_MIN = 20;
-	//public static final int RADAR_ANGULO_APERTURA = 10;
+	public static final int RADAR_ALCANCE_MAX = 200;
+	public static final int RADAR_ALCANCE_MIN = 20;
+	public static final int RADAR_ANGULO_APERTURA = 40;
+	public static final int RADAR_DIRECCION = 40;
 	
 }
