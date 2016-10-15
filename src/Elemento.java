@@ -13,7 +13,12 @@ public abstract class Elemento {
 	private Posicion posicion;
 	private Tamanio tamanio;
 	private boolean vivo = true;
-		
+	
+	public Elemento(){
+		Tamanio tamanio = new Tamanio(0,0);
+		this.tamanio = tamanio;
+	}
+	
 	/**
 	 * Cada elemento debe implementar este método donde definirá qué acción o acciones realizar
 	 * cuando le toque su turno para jugar 
@@ -76,5 +81,13 @@ public abstract class Elemento {
 	 */
 	public void setTamanio(Tamanio tamanio) {
 		this.tamanio = tamanio;
+	}
+	
+	/**
+	 * Mensaje de texto que presentará el elemento mostrando su posición
+	 */
+	@Override
+	public String toString() {
+		return " - Posicion= " + posicion;
 	}
 }

@@ -2,7 +2,12 @@ public abstract class Movible extends Elemento{
 	
 	private int direccion;
 	private int velocidad;
-		
+	
+	public Movible(){
+		super();
+		this.direccion = 0;
+		this.velocidad = 0;
+	}
 	/**
 	 * Cada elemento movible deberá implementar su forma de avanzar
 	 */

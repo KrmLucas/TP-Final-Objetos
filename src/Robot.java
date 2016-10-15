@@ -1,14 +1,18 @@
-
-
 import java.util.ArrayList;
 
-public class Robot extends Elemento implements RadarListener {
+public class Robot extends Movible implements RadarListener {
 
 	private String nombre;
 	private int nivelEscudo;
 	private int nivelEnergia;
 	
+	private Robot(){
+		super();
+		this.setTamanio(new Tamanio(Config.ROBOT_ANCHO ,Config.ROBOT_ALTO));
+	}
+	
 	public Robot(String nombre){
+		this();
 		this.nombre = nombre;
 	}
 	
@@ -43,6 +47,12 @@ public class Robot extends Elemento implements RadarListener {
 		
 		System.out.println(String.format("Robot %s detecto elementos", this.nombre));
 
+	}
+
+	@Override
+	public void avanzar() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
