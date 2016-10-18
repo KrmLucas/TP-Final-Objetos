@@ -33,7 +33,7 @@ public class Satelite extends Elemento implements RadarListener {
 	 * @param e
 	 */
 	public void disparar (Elemento e){
-		Municion m = new Municion(e);
+		Municion m = new Municion(e, 0);
 		Escenario.getEscenario().addElemento(m);
 		this.setCantidadMuniciones(this.getCantidadMuniciones()-1);
 	}
@@ -105,5 +105,7 @@ public class Satelite extends Elemento implements RadarListener {
 		this.cantidadMuniciones = cantidadMuniciones;
 	}
 
-	
+	public String getEquipo(){
+		return this.equipo;
+	}
 }

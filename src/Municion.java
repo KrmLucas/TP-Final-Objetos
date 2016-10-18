@@ -3,23 +3,24 @@
  *  
  * @author Krmpotic-Saiegg
  * @see Robot
- * @see Satelite
+ * @see SateliteOld
  *
  */
 public class Municion extends Movible{
 	
-	private int danio;
+	//private int danio;
 	private Elemento elemento;
 	
 	/**
-	 * Constructor
-	 * 
+	 * Constructor privado que setea los valores de la munición
+	 * @param elemento : Elemento que efectúa el disparo (Robot o Satélite)
 	 */
-	private Municion(Elemento objetivo){
+	private Municion(Elemento elemento){
 		super();
 		this.setPosicion(Calculos.Centro(this.elemento));
-		this.setTamanio(new Tamanio(Config.MUNICION_ANCHO ,Config.MUNICION_ALTO));
-		this.danio = Config.MUNICION_DANIO;
+		this.setTamanio(new Tamanio(ConfigOld.MUNICION_ANCHO ,ConfigOld.MUNICION_ALTO));
+		//this.danio = Config.MUNICION_DANIO;
+		this.setDanio(ConfigOld.MUNICION_DANIO);
 	}
 	
 	/**
@@ -28,7 +29,7 @@ public class Municion extends Movible{
 	 * @param direccion : indica el ángulo con el que deberá viajar
 	 */
 	public Municion(Elemento elemento, int direccion){
-		this();
+		this(elemento);
 		this.elemento = elemento;
 		this.setDireccion(direccion);
 	}
@@ -38,13 +39,8 @@ public class Municion extends Movible{
 	 * Método que setea la nueva posición donde quedará ubicada la munición después de avanzar
 	 */
 	public void avanzar() {
-
-		
 		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
-							this.getDireccion(), Config.MUNICION_VELOCIDAD));
-		
-		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), this.getDireccion(), Config.MUNICION_VELOCIDAD));
-
+							this.getDireccion(), ConfigOld.MUNICION_VELOCIDAD));
 	}
 
 	@Override
@@ -64,18 +60,15 @@ public class Municion extends Movible{
 	}
 
 	/**
-	 * Método que devuelve el daño que provoca la munición
-	 * @return La cantidad de escudos que destruye
-	 */
-	public int getDanio() {
-		return this.danio;
-	}
-	
-	/**
 	 * Método que devuelve el elemento que efectuó el disparo
 	 * @return Un elemento Robot o Satélite
 	 */
 	public Elemento getElemento() {
 		return this.elemento;
+	}
+
+	@Override
+	public String toString() {
+		return "Munición: Posición=" + super.toString();
 	}
 }

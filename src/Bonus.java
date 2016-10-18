@@ -15,7 +15,7 @@ public abstract class Bonus extends Elemento {
 		super (); 
 		this.tiempoDeVida = 50; // cantidad de turnos
 		Posicion posicion = new Posicion(rand.nextInt(), rand.nextInt());
-		Tamanio tamanio = new Tamanio(Config.BONUS_ANCHO, Config.BONUS_ALTO);
+		Tamanio tamanio = new Tamanio(ConfigOld.BONUS_ANCHO, ConfigOld.BONUS_ALTO);
 		this.setPosicion(posicion);
 		this.setTamanio(tamanio);
 	}

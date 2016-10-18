@@ -11,9 +11,9 @@ public class ZonaRescate extends Elemento{
 	
 	public ZonaRescate() {
 		super ();
-		this.getTamanio().setAlto(Config.ZONA_ALTO);
-		this.getTamanio().setAncho(Config.ZONA_ANCHO);
-		this.personas = Config.ZONA_CANT_PERS;
+		this.getTamanio().setAlto(ConfigOld.ZONA_ALTO);
+		this.getTamanio().setAncho(ConfigOld.ZONA_ANCHO);
+		this.personas = ConfigOld.ZONA_CANT_PERS;
 	}
 	
 	public void rescatarPersona(){

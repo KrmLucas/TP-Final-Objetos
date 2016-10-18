@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Escenario {
@@ -11,8 +12,8 @@ public class Escenario {
 	private Escenario(){
 		
 		this.elementos = new ArrayList<Elemento>();
-		this.alto = Config.ESCENARIO_ALTO;
-		this.ancho = Config.ESCENARIO_ANCHO;
+		this.alto = ConfigOld.ESCENARIO_ALTO;
+		this.ancho = ConfigOld.ESCENARIO_ANCHO;
 	}
 	
 	public static Escenario getEscenario(){
@@ -26,19 +27,23 @@ public class Escenario {
 	/**
 	 * Método que crea los elementos que intervendrán en el juego y administra la dinámica del mismo
 	 */
-	public void iniciarJuego(){
+	public void iniciarJuego() throws IOException{
+		
+        boolean salir = false;
 		
 		crearElementos();
-		
 		while(true){
-		 
-			turnos();
-			
-			verficarChoques();
-			
-			depurarElementos();
-			
-			mostrar();
+			do{
+				turnos();
+				verficarChoques();
+				depurarElementos();
+				mostrar();
+				System.out.println("Presione ENTER para continuar ('q' para salir)");
+				int caracter = System.in.read();
+				if (caracter == 81 || caracter == 113){ // 81= Q  113= q
+					salir = true;
+				}
+			} while (!salir);
 		}		
 	}
 
@@ -84,7 +89,6 @@ public class Escenario {
 
 			}			
 		}
-	
 	}
 
 	private void turnos() {

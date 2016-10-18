@@ -24,9 +24,9 @@ public class Radar {
 	 */
 	public Radar(Elemento elemento){
 		this.listeners = new ArrayList<RadarListener>();
-		this.anguloApertura = Config.RADAR_ANGULO_APERTURA;
-		this.alcance = Config.RADAR_ALCANCE_MIN;
-		this.direccion = Config.RADAR_DIRECCION;
+		this.anguloApertura = ConfigOld.RADAR_ANGULO_APERTURA;
+		this.alcance = ConfigOld.RADAR_ALCANCE_MIN;
+		this.direccion = ConfigOld.RADAR_DIRECCION;
 		this.dueño = elemento;
 		
 	}
@@ -93,12 +93,12 @@ public class Radar {
 	}
 
 	public void setAlcance(double alcance) {
-		if (Config.RADAR_ALCANCE_MIN <= alcance && alcance <= Config.RADAR_ALCANCE_MAX){
+		if (ConfigOld.RADAR_ALCANCE_MIN <= alcance && alcance <= ConfigOld.RADAR_ALCANCE_MAX){
 			this.alcance = alcance;
-		}else if(Config.RADAR_ALCANCE_MIN > alcance){
-			this.alcance = Config.RADAR_ALCANCE_MIN;
+		}else if(ConfigOld.RADAR_ALCANCE_MIN > alcance){
+			this.alcance = ConfigOld.RADAR_ALCANCE_MIN;
 		}else{
-			this.alcance = Config.RADAR_ALCANCE_MAX;
+			this.alcance = ConfigOld.RADAR_ALCANCE_MAX;
 		}
 			
 	}

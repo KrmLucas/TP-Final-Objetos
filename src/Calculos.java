@@ -2,8 +2,8 @@ class Calculos {
 	
 	public static final Posicion Centro(Elemento elemento){
 		
-		int x = elemento.getTamanio().getAncho()/2+elemento.getPosicion().getX();
-		int y = elemento.getTamanio().getAlto()/2+elemento.getPosicion().getY();
+		int x = elemento.getTamanio().getAncho()/2 + elemento.getPosicion().getX();
+		int y = elemento.getTamanio().getAlto()/2  + elemento.getPosicion().getY();
 		
 		return new Posicion(x, y);		
 	}
@@ -15,5 +15,16 @@ class Calculos {
 		
 		return new Posicion(px, py);
 	}
-
+	
+	public static int direccion(Posicion inicio, Posicion fin){
+		
+		int deltaX = fin.getX() - inicio.getX();
+		int deltaY = fin.getY() - inicio.getY();
+		double hipotenusa = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+		int angulo = (int)Math.round((Math.toDegrees(Math.acos(deltaX/hipotenusa)))); //Devuelve long
+		
+		if (deltaY < 0)
+			angulo = 360 - angulo;
+		return angulo;
+	}
 }

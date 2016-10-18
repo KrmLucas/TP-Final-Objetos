@@ -1,17 +1,35 @@
-public abstract class Movible extends Elemento{
+/**
+ * 
+ * @author Trabajo
+ *
+ */
+public abstract class Movible extends Elemento implements HaceDanio{
 	
 	private int direccion;
 	private int velocidad;
+	private int danio;
 	
 	public Movible(){
 		super();
 		this.direccion = 0;
 		this.velocidad = 0;
+		this.danio = 0;
 	}
+	
 	/**
 	 * Cada elemento movible deberá implementar su forma de avanzar
 	 */
 	public abstract void avanzar();
+	
+	/**
+	 * Todo elemento movible provoca un daño a quien lo choca
+	 * @param Valor en el que disminuirán los escudos de los objetos que lo choquen 
+	 */
+	protected void setDanio(int danio){
+		
+		this.danio = danio;
+		
+	}
 
 	/**
 	 * Método que indica la dirección del elemento movible
@@ -43,5 +61,13 @@ public abstract class Movible extends Elemento{
 	 */
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
+	}
+	
+	/**
+	 * Método que indica el nivel de daño que provoca el elemento movible
+	 * @return  El valor de nivel de escudos a descontar
+	 */
+	public int getDanio() {
+		return this.danio;
 	}
 }
