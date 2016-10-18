@@ -2,10 +2,14 @@
 public class Refugio extends Elemento{
 	
 	private int personas; 
+	private String equipo;
+	private int danio;
 	
-	public Refugio (){
+	public Refugio (String equipo){
 		super(); 
+		this.equipo = equipo;
 		this.personas = 0;
+		this.danio = Config.REFUGIO_DANIO;
 	}
 
 	public void quitarPersona(){
@@ -40,9 +44,18 @@ public class Refugio extends Elemento{
 		return this.personas;
 	}
 	
+	public String getEquipo(){
+		return this.equipo;
+	}
+	
+	public int getDanio(){
+		return this.danio;
+	}
+	
 	public void setPersonas(int personas){
 		this.personas = personas;
 	}
+	
 	public String toString(){
 		return "Refugio\n "
 				+ "Cantidad de personas rescatadas: " + this.getPersonas(); 			

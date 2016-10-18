@@ -19,6 +19,7 @@ public class Config {
 	// Refugio
 	public static final int REFUGIO_ANCHO = 30;
 	public static final int REFUGIO_ALTO = 30;
+	public static final int REFUGIO_DANIO = 5;
 
 	// ZonaRescate
 	public static final int ZONA_ANCHO = 30;
@@ -47,4 +48,9 @@ public class Config {
 	public static final int RADAR_ANGULO_APERTURA = 40;
 	public static final int RADAR_DIRECCION = 40;
 	
+	//Equipo
+	public static final String EQUIPO_RYAN = "RYAN";
+	public static final String EQUIPO_HUMANO = "HUMANO";
+	public static final String EQUIPO_RENCOROSO = "RENCOROSO";
+	public static final String EQUIPO_QUEJODIDO = "QUEJODIDO";
 }

@@ -10,15 +10,17 @@ public class Satelite extends Elemento implements RadarListener {
 
 	private Radar radar;
 	private int nivelEscudo;
+	private String equipo;
 	private int cantidadMuniciones;
 	
 	/**
 	 * Constructor de la clase. 
 	 */
-	public Satelite (){
+	public Satelite (String equipo){
 		super(); 
 		this.cantidadMuniciones = 10;
 		this.nivelEscudo = Config.SATELITE_ESCUDOS;
+		this.equipo = equipo;
 		this.radar = new Radar(this);
 		this.getTamanio().setAlto(Config.SATELITE_ALTO);
 		this.getTamanio().setAncho(Config.SATELITE_ANCHO);
