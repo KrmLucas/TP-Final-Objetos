@@ -12,8 +12,8 @@ public class Escenario {
 	private Escenario(){
 		
 		this.elementos = new ArrayList<Elemento>();
-		this.alto = ConfigOld.ESCENARIO_ALTO;
-		this.ancho = ConfigOld.ESCENARIO_ANCHO;
+		this.alto = Config.ESCENARIO_ALTO;
+		this.ancho = Config.ESCENARIO_ANCHO;
 	}
 	
 	public static Escenario getEscenario(){
@@ -26,37 +26,58 @@ public class Escenario {
 	
 	/**
 	 * Método que crea los elementos que intervendrán en el juego y administra la dinámica del mismo
+	 * @return 
 	 */
-	public void iniciarJuego() throws IOException{
+	public Escenario iniciarJuego(){
 		
         boolean salir = false;
 		
 		crearElementos();
 		while(true){
-			do{
+			turnos();
+			verficarChoques();
+			depurarElementos();
+			mostrar();
+			/*do{
 				turnos();
 				verficarChoques();
 				depurarElementos();
 				mostrar();
-				System.out.println("Presione ENTER para continuar ('q' para salir)");
+				/*System.out.println("Presione ENTER para continuar ('q' para salir)");
 				int caracter = System.in.read();
 				if (caracter == 81 || caracter == 113){ // 81= Q  113= q
 					salir = true;
 				}
-			} while (!salir);
+			} while (!salir);*/
 		}		
 	}
 
 	// Crea los elementos que intervendrán en el juego y los agrega a la lista de elementos
 	private void crearElementos() {
-
-		
+		ZonaRescate zonaRescate = new ZonaRescate();
+		elementos.add(zonaRescate);
+		Robot robotRyan = new RobotSoldadoRyan(Config.EQUIPO_RYAN);
+		elementos.add(robotRyan);
+		//Satelite satelite = new Satelite(Config.EQUIPO_RYAN);
+		//elementos.add(satelite);
+		Refugio refugio = new Refugio(Config.EQUIPO_RYAN);
+		elementos.add(refugio);
+		//Robot robotRencoroso = new RobotRencoroso(Config.EQUIPO_RENCOROSO);
+		//elementos.add(robotRencoroso);
+		//Satelite sateliteRencoroso = new Satelite(Config.EQUIPO_RENCOROSO);
+		//elementos.add(sateliteRencoroso);
+		//Refugio refugioRencoroso = new Refugio(Config.EQUIPO_RENCOROSO);
+		//elementos.add(refugioRencoroso);
 	}
 	
 	// Muestra el estado de cada elemento en el escenario
 	private void mostrar() {
-		
-		
+		for(int i=0; i<this.elementos.size();i++){
+			Elemento e1 = this.elementos.get(i);
+			if (e1.estaVivo()){
+				System.out.println(e1);
+			}
+		}
 	}
 
 	//Saca el elemento de la lista si no está vivo
@@ -86,7 +107,6 @@ public class Escenario {
 					e1.chocarContra(e2);
 					e2.chocarContra(e1);
 				}
-
 			}			
 		}
 	}

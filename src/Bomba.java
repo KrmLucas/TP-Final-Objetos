@@ -1,12 +1,12 @@
 
 public class Bomba extends Movible{
 	
-	private int velocidad = ConfigOld.BOMBA_VELOCIDAD_INICIAL;
+	private int velocidad = Config.BOMBA_VELOCIDAD_INICIAL;
 
 	private Bomba(){
 		super();
-		this.setTamanio(new Tamanio(ConfigOld.BOMBA_ANCHO, ConfigOld.BOMBA_ALTO));
-		this.setDanio(ConfigOld.BOMBA_DANIO);	
+		this.setTamanio(new Tamanio(Config.BOMBA_ANCHO, Config.BOMBA_ALTO));
+		this.setDanio(Config.BOMBA_DANIO);	
 	}
 	
 	public Bomba(Elemento elemento, int direccion){
@@ -16,8 +16,10 @@ public class Bomba extends Movible{
 	}
 	
 	private void aumentarTamanio() {
-		Tamanio tamanio = new Tamanio(this.getTamanio().getAncho()*(ConfigOld.BOMBA_ONDA+1), this.getTamanio().getAlto()*(ConfigOld.BOMBA_ONDA+1));
-		Posicion posicion = new Posicion(this.getPosicion().getX()-ConfigOld.BOMBA_ONDA, this.getPosicion().getY()-ConfigOld.BOMBA_ONDA);
+		Tamanio tamanio = new Tamanio(this.getTamanio().getAncho()*(Config.BOMBA_ONDA+1), 
+										this.getTamanio().getAlto()*(Config.BOMBA_ONDA+1));
+		Posicion posicion = new Posicion(this.getPosicion().getX()-Config.BOMBA_ONDA, 
+										this.getPosicion().getY()-Config.BOMBA_ONDA);
 		this.setTamanio(tamanio);
 		this.setPosicion(posicion);
 	}

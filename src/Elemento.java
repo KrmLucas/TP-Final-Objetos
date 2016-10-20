@@ -56,6 +56,15 @@ public abstract class Elemento {
 		return posicion;
 	}
 	
+	public int getPosicionX() {
+		return this.getPosicion().getX();
+	}
+	
+	public int getPosicionY() {
+		return this.getPosicion().getY();
+	}
+	
+	
 	/**
 	 * Método utilizado para fijar la posición de un elemento
 	 * @param Un objeto Posicion

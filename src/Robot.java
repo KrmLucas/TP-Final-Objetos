@@ -15,12 +15,14 @@ public abstract class Robot extends Movible implements RadarListener {
 	
 	private Robot(){
 		super();
-		this.setTamanio(new Tamanio(ConfigOld.ROBOT_ANCHO ,ConfigOld.ROBOT_ALTO));
+		this.setPosicion(new Posicion(0,0));
+		this.setTamanio(new Tamanio(Config.ROBOT_ANCHO ,Config.ROBOT_ALTO));
 		this.radar = new Radar(this);
 		this.persona = false;
-		this.cantidadMuniciones = ConfigOld.ROBOT_MUNICIONES;
-		this.cantidadBombas = ConfigOld.ROBOT_BOMBAS;
-		this.danio = ConfigOld.ROBOT_DANIO;
+		this.cantidadMuniciones = Config.ROBOT_MUNICIONES;
+		this.cantidadBombas = Config.ROBOT_BOMBAS;
+		this.danio = Config.ROBOT_DANIO;
+		this.elementosDetectados = new ArrayList<Elemento>();
 	}
 	
 	public Robot(String equipo){
@@ -104,7 +106,7 @@ public abstract class Robot extends Movible implements RadarListener {
 	@Override
 	public void avanzar() {
 		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
-				this.getDireccion(), ConfigOld.ROBOT_VELOCIDAD));
+				this.getDireccion(), Config.ROBOT_VELOCIDAD));
 		if (this.persona){
 			this.nivelEnergia--;
 		}
@@ -150,10 +152,10 @@ public abstract class Robot extends Movible implements RadarListener {
 			this.nivelEscudo -= b.getDanio();
 		}
 		if (elemento instanceof BonusBateria){
-			this.nivelEnergia += ConfigOld.BONUS_ENERGIA;
+			this.nivelEnergia += Config.BONUS_ENERGIA;
 		}
 		if (elemento instanceof BonusEscudo){
-			this.nivelEscudo += ConfigOld.BONUS_ESCUDO;
+			this.nivelEscudo += Config.BONUS_ESCUDO;
 		}
 	}
 	

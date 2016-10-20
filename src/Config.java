@@ -10,6 +10,9 @@ public class Config {
 	public static final int ROBOT_ESCUDOS = 25;
 	public static final int ROBOT_ENERGIA = 1000;
 	public static final int ROBOT_VELOCIDAD = Config.ROBOT_ANCHO/2;
+	public static final int ROBOT_MUNICIONES = 100;
+	public static final int ROBOT_BOMBAS = 50;
+	public static final int ROBOT_DANIO = 5;
 	
 	// Satelite
 	public static final int SATELITE_ANCHO = 30;
@@ -29,6 +32,9 @@ public class Config {
 	// Bonus
 	public static final int BONUS_ANCHO = 10;
 	public static final int BONUS_ALTO = 10;
+	public static final int BONUS_ESCUDO = 5;
+	public static final int BONUS_ENERGIA = 5;
+	
 
 	// Municion
 	public static final int MUNICION_ANCHO = 2;
@@ -41,6 +47,7 @@ public class Config {
 	public static final int BOMBA_ALTO = 10;
 	public static final int BOMBA_VELOCIDAD_INICIAL = Config.ROBOT_ANCHO*3;
 	public static final int BOMBA_DANIO = 5;
+	public static final int BOMBA_ONDA = 10;
 		
 	// Radar
 	public static final int RADAR_ALCANCE_MAX = 200;

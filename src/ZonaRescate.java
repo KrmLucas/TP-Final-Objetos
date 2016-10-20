@@ -8,12 +8,14 @@
 public class ZonaRescate extends Elemento{
 
 	private int personas;
+	private Posicion posicion;
 	
 	public ZonaRescate() {
 		super ();
-		this.getTamanio().setAlto(ConfigOld.ZONA_ALTO);
-		this.getTamanio().setAncho(ConfigOld.ZONA_ANCHO);
-		this.personas = ConfigOld.ZONA_CANT_PERS;
+		this.getTamanio().setAlto(Config.ZONA_ALTO);
+		this.getTamanio().setAncho(Config.ZONA_ANCHO);
+		this.posicion = new Posicion(300, 200);
+		this.personas = Config.ZONA_CANT_PERS;
 	}
 	
 	public void rescatarPersona(){
@@ -24,6 +26,10 @@ public class ZonaRescate extends Elemento{
 		return personas;
 	}
 
+	public Posicion getPosicion() {
+		return this.posicion;
+	}
+	
 	public void setPersonas(int personas) {
 		this.personas = personas;
 	}

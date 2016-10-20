@@ -15,7 +15,7 @@ public class Radar {
 	private double anguloApertura;
 	private double alcance;
 	private double direccion;
-	private Elemento dueño;
+	private Elemento duenio;
 	private ArrayList<RadarListener> listeners;
 	
 	/**
@@ -24,11 +24,10 @@ public class Radar {
 	 */
 	public Radar(Elemento elemento){
 		this.listeners = new ArrayList<RadarListener>();
-		this.anguloApertura = ConfigOld.RADAR_ANGULO_APERTURA;
-		this.alcance = ConfigOld.RADAR_ALCANCE_MIN;
-		this.direccion = ConfigOld.RADAR_DIRECCION;
-		this.dueño = elemento;
-		
+		this.anguloApertura = Config.RADAR_ANGULO_APERTURA;
+		this.alcance = Config.RADAR_ALCANCE_MIN;
+		this.direccion = Config.RADAR_DIRECCION;
+		this.duenio = elemento;
 	}
 	
 	/**
@@ -42,8 +41,8 @@ public class Radar {
 		
 		// armamos zona de deteccion.
 		Polygon zonaDeteccion = new Polygon();
-		zonaDeteccion.addPoint(this.getDueño().getPosicion().getX(), 
-							   this.getDueño().getPosicion().getY());
+		zonaDeteccion.addPoint(this.getDuenio().getPosicionX(), 
+							   this.getDuenio().getPosicionY());
 		
 		for (double i = (this.getDireccion() - (this.getAnguloApertura()/2)); 
 					 i< (this.getDireccion() + (this.getAnguloApertura()/2));
@@ -52,6 +51,9 @@ public class Radar {
 			zonaDeteccion.addPoint((int)(Math.cos(Math.toRadians(i) * this.getAlcance())), 
 								   (int)(Math.sin(Math.toRadians(i) * this.getAlcance())));
 		}
+		
+		zonaDeteccion.addPoint(this.getDuenio().getPosicion().getX(), 
+				   			   this.getDuenio().getPosicion().getY());
 
 		
 		for(Elemento e : Escenario.getEscenario().getElementos()) {
@@ -92,16 +94,24 @@ public class Radar {
 		return alcance;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "Radar detecto elemento";
+	}
+	
 	public void setAlcance(double alcance) {
-		if (ConfigOld.RADAR_ALCANCE_MIN <= alcance && alcance <= ConfigOld.RADAR_ALCANCE_MAX){
+		if (Config.RADAR_ALCANCE_MIN <= alcance && alcance <= Config.RADAR_ALCANCE_MAX){
 			this.alcance = alcance;
-		}else if(ConfigOld.RADAR_ALCANCE_MIN > alcance){
-			this.alcance = ConfigOld.RADAR_ALCANCE_MIN;
+		}else if(Config.RADAR_ALCANCE_MIN > alcance){
+			this.alcance = Config.RADAR_ALCANCE_MIN;
 		}else{
-			this.alcance = ConfigOld.RADAR_ALCANCE_MAX;
+			this.alcance = Config.RADAR_ALCANCE_MAX;
 		}
 			
 	}
+	
+	
 
 	public double getDireccion() {
 		return direccion;
@@ -111,8 +121,8 @@ public class Radar {
 		this.direccion = direccion;
 	}
 
-	public Elemento getDueño() {
-		return dueño;
+	public Elemento getDuenio() {
+		return duenio;
 	}
 
 	public ArrayList<RadarListener> getListeners() {
