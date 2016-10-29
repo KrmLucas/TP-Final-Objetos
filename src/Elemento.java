@@ -97,6 +97,6 @@ public abstract class Elemento {
 	 */
 	@Override
 	public String toString() {
-		return " - Posicion= " + posicion;
+		return " Posicion= " + posicion;
 	}
 }

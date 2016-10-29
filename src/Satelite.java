@@ -12,6 +12,7 @@ public class Satelite extends Elemento implements RadarListener {
 	private int nivelEscudo;
 	private String equipo;
 	private int cantidadMuniciones;
+	private int direccionDisparo;
 	
 	/**
 	 * Constructor de la clase. 
@@ -24,6 +25,10 @@ public class Satelite extends Elemento implements RadarListener {
 		this.radar = new Radar(this);
 		this.getTamanio().setAlto(Config.SATELITE_ALTO);
 		this.getTamanio().setAncho(Config.SATELITE_ANCHO);
+		this.setPosicion(new Posicion(0,0));	//TODO
+		this.direccionDisparo = 0;				//TODO
+		this.radar.addRadarListener(this);
+		//TODO [CORRECCION] Nunca se ponen a escuchar el radar.
 	}
 	
 	/**
@@ -32,8 +37,9 @@ public class Satelite extends Elemento implements RadarListener {
 	 * al Escenario y decrementa la cantidad de municiones.
 	 * @param e
 	 */
-	public void disparar (Elemento e){
-		Municion m = new Municion(e, 0);
+	public void disparar(int direccion){
+		//TODO [CORRECCION] Por qué necesitan un elemento por parametro?
+		Municion m = new Municion(this, direccion);
 		Escenario.getEscenario().addElemento(m);
 		this.setCantidadMuniciones(this.getCantidadMuniciones()-1);
 	}
@@ -45,14 +51,25 @@ public class Satelite extends Elemento implements RadarListener {
 		for (Elemento e : elementos){
 			//TODO: ver tema equipos -> si robot es de mi equipo no le tiro
 			if (e instanceof Bonus){
-				this.disparar(e);
+				this.disparar(this.calcularDireccion(e.getPosicion()));
 			}else if (e instanceof Robot){
-				this.disparar(e);
+				Robot r = (Robot) e;
+				this.disparar(this.calcularDireccion(r.getPosicion(),r.getDireccion(),r.getVelocidad()));
 			}
 		}
 	}
 
 	
+	private int calcularDireccion(Posicion posicion, int direccion, int velocidad) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private int calcularDireccion(Posicion posicion) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	/**
 	 * Implementacion de los metodos heredados de la clase abstracta Elemento
 	 */
@@ -66,7 +83,7 @@ public class Satelite extends Elemento implements RadarListener {
 
 	@Override
 	public void destruir() {
-		// TODO Auto-generated method stub
+		//TODO [CORRECCION] Por qué sobreescriben esto? y no hacen nada?
 		
 	}
 	/**

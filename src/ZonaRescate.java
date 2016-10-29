@@ -10,6 +10,8 @@ public class ZonaRescate extends Elemento{
 	private int personas;
 	private Posicion posicion;
 	
+	//TODO [CORRECCION]Falta documentacion  
+	
 	public ZonaRescate() {
 		super ();
 		this.getTamanio().setAlto(Config.ZONA_ALTO);

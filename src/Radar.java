@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.lang.Math;
@@ -11,11 +12,12 @@ import java.lang.Math;
  */
 public class Radar {
 
-	
 	private double anguloApertura;
 	private double alcance;
 	private double direccion;
 	private Elemento duenio;
+	private Escenario escenario;
+	private ArrayList<Elemento> elementosDetectados; 
 	private ArrayList<RadarListener> listeners;
 	
 	/**
@@ -24,10 +26,12 @@ public class Radar {
 	 */
 	public Radar(Elemento elemento){
 		this.listeners = new ArrayList<RadarListener>();
+		this.elementosDetectados = new ArrayList<Elemento>();
 		this.anguloApertura = Config.RADAR_ANGULO_APERTURA;
 		this.alcance = Config.RADAR_ALCANCE_MIN;
 		this.direccion = Config.RADAR_DIRECCION;
 		this.duenio = elemento;
+		this.escenario = Escenario.getEscenario();
 	}
 	
 	/**
@@ -37,13 +41,18 @@ public class Radar {
 	 */
 	public void escanear(){
 		
-		ArrayList<Elemento> detectados = new ArrayList<Elemento>();
+		//ArrayList<Elemento> detectados = new ArrayList<Elemento>();
+		
+		
+		//TODO [MEJORA] Si van a utilizar muchas veces el mismo x e y, seria interesanto ponerlas en variables locales
+		//asi el código queda mucho mas entendible.
 		
 		// armamos zona de deteccion.
 		Polygon zonaDeteccion = new Polygon();
-		zonaDeteccion.addPoint(this.getDuenio().getPosicionX(), 
-							   this.getDuenio().getPosicionY());
+		int x = this.getDuenio().getPosicionX();
+		int y = this.getDuenio().getPosicionY();
 		
+		zonaDeteccion.addPoint(x,y);
 		for (double i = (this.getDireccion() - (this.getAnguloApertura()/2)); 
 					 i< (this.getDireccion() + (this.getAnguloApertura()/2));
 					 i++){
@@ -51,24 +60,27 @@ public class Radar {
 			zonaDeteccion.addPoint((int)(Math.cos(Math.toRadians(i) * this.getAlcance())), 
 								   (int)(Math.sin(Math.toRadians(i) * this.getAlcance())));
 		}
+		zonaDeteccion.addPoint(x,y);
 		
-		zonaDeteccion.addPoint(this.getDuenio().getPosicion().getX(), 
-				   			   this.getDuenio().getPosicion().getY());
+		//Nuevo
+		
+		this.elementosDetectados = this.escenario.detectarElementos(zonaDeteccion);
+		
+		// Hasta acá
 
-		
-		for(Elemento e : Escenario.getEscenario().getElementos()) {
+		/*
+		//TODO [CORRECCION] No exponer la lista
+		for(Elemento e : it.next()){ //Escenario.getEscenario().getElementos()) {
 			
 			Rectangle r = new Rectangle (e.getPosicion().getX(), e.getPosicion().getY(),
 										 e.getTamanio().getAncho(), e.getTamanio().getAlto());
 			
 			if (zonaDeteccion.intersects(r)){
 				detectados.add(e);
-			}
-			
-		}
-		
+			}			
+		}*/
 		for(RadarListener listener : this.listeners){
-			listener.elementosDetectados(detectados);
+			listener.elementosDetectados(this.elementosDetectados);
 		}
 	}
 
@@ -107,11 +119,8 @@ public class Radar {
 			this.alcance = Config.RADAR_ALCANCE_MIN;
 		}else{
 			this.alcance = Config.RADAR_ALCANCE_MAX;
-		}
-			
+		}	
 	}
-	
-	
 
 	public double getDireccion() {
 		return direccion;
@@ -124,14 +133,14 @@ public class Radar {
 	public Elemento getDuenio() {
 		return duenio;
 	}
-
-	public ArrayList<RadarListener> getListeners() {
-		return listeners;
-	}
-
-	public void setListeners(ArrayList<RadarListener> listeners) {
-		this.listeners = listeners;
-	}
 	
-	
+	//TODO [CORRECCION] Si tienen un addRadarListener y un removeRadarListener, no deberian exponer la variable listeners
+
+	//public ArrayList<RadarListener> getListeners() {
+	//	return listeners;
+	//}
+
+	//public void setListeners(ArrayList<RadarListener> listeners) {
+	//	this.listeners = listeners;
+	//}
 }

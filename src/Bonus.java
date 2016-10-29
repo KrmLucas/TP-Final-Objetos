@@ -1,3 +1,4 @@
+//CORREGIDO
 
 import java.util.Random;
 /**
@@ -8,32 +9,45 @@ import java.util.Random;
 public abstract class Bonus extends Elemento {
 
 	private int tiempoDeVida;
-	static Random rand = new Random();
+	private static Random randX = new Random(Config.ESCENARIO_ANCHO); //TODO [CORRECCION] Agregar nivel de accesibilidad (private)
+	private static Random randY = new Random(Config.ESCENARIO_ALTO);
 
 	//TODO: limitar el random en funcion de las dimensiones del escenario
 	public Bonus (){
 		super (); 
-		this.tiempoDeVida = 50; // cantidad de turnos
-		Posicion posicion = new Posicion(rand.nextInt(), rand.nextInt());
-		Tamanio tamanio = new Tamanio(ConfigOld.BONUS_ANCHO, ConfigOld.BONUS_ALTO);
+		//TODO [CORRECCION] Tiene una clase Config, utilizarla para estos valores fijos.
+		this.tiempoDeVida = Config.BONUS_VIDA; // cantidad de turnos
+		Posicion posicion = new Posicion(randX.nextInt(), randY.nextInt());
+		Tamanio tamanio = new Tamanio(Config.BONUS_ANCHO, Config.BONUS_ALTO);
 		this.setPosicion(posicion);
 		this.setTamanio(tamanio);
 	}
+	
 	/**
-	 * Método implementado en las subclases
+	 * Método que descuenta tiempo de vida al bonus hasta llegar a 0,
+	 * momento en el cual el bonus se destruye
 	 */
 	@Override
 	public void jugar() {
-		// TODO Auto-generated method stub
+		
+		if (this.estaVivo()){
+			this.tiempoDeVida--;
+		}
+		if (this.tiempoDeVida == 0){
+			this.destruir();
+		}
 	}
+	
 	/**
 	 * Método implementado en las subclases
 	 */
 	@Override
 	public void chocarContra(Elemento elemento) {
-		// TODO Auto-generated method stub
-		
+		if (elemento instanceof Municion | elemento instanceof Robot |elemento instanceof Bomba){
+			this.destruir();
+		}
 	}
+	
 	/**
 	 * Tiempo de vida es la "cantidad de turnos" en los que estará disponible el Bonus 
 	 * @param tiempoDeVida
@@ -42,8 +56,11 @@ public abstract class Bonus extends Elemento {
 		this.tiempoDeVida = tiempoDeVida;
 	}
 
+	/**
+	 * 
+	 * @return Devuelve el tiempo de vida del bonus en el escenario
+	 */
 	public int getTiempoDeVida (){
 		return tiempoDeVida;
 	}
-
 }

@@ -1,5 +1,15 @@
+//CORREGIDO -> Ver calcularDirecciones
+
 import java.util.ArrayList;
 
+/**
+ * Clase abstracta que generaliza el funcionamiento de los diferentes robots.
+ * Este robot genérico implementa una estrategia de juego muy simple que deberá
+ * ser especializada por los robots de cada equipo del juego.
+ * 
+ * @author Krmpotic-Saiegg
+ *
+ */
 public abstract class Robot extends Movible implements RadarListener {
 
 	private String equipo;
@@ -11,8 +21,11 @@ public abstract class Robot extends Movible implements RadarListener {
 	private int cantidadMuniciones;
 	private int cantidadBombas;
 	private int danio;
+	private int direccionDisparo;
+	private int direccionBomba;
 	private ArrayList<Elemento>elementosDetectados;
 	
+	//Constructor privado que setea las variables iniciales
 	private Robot(){
 		super();
 		this.setPosicion(new Posicion(0,0));
@@ -22,9 +35,17 @@ public abstract class Robot extends Movible implements RadarListener {
 		this.cantidadMuniciones = Config.ROBOT_MUNICIONES;
 		this.cantidadBombas = Config.ROBOT_BOMBAS;
 		this.danio = Config.ROBOT_DANIO;
+		this.direccionDisparo = this.getDireccion();
+		this.direccionBomba = this.getDireccion();
 		this.elementosDetectados = new ArrayList<Elemento>();
+		this.radar.addRadarListener(this);   //TODO [CORRECCION] nunca se ponen a escuchar al radar
 	}
 	
+	/**
+	 * Constructor que debe recibir un String parametrizado con el nombre del equipo
+	 * 
+	 * @param equipo
+	 */
 	public Robot(String equipo){
 		this();
 		this.equipo = equipo;
@@ -35,6 +56,11 @@ public abstract class Robot extends Movible implements RadarListener {
 		return this.equipo;
 	}
 
+	/**
+	 * Método que devuelve el nivel actual de escudos que protegen al robot
+	 * 
+	 * @return Valor entero con el nivel de escudos
+	 */
 	public int getNivelEscudo() {
 		return this.nivelEscudo;
 	}
@@ -75,21 +101,25 @@ public abstract class Robot extends Movible implements RadarListener {
 		return this.radar;
 	}
 
+	/*
+	//TODO [CORRECCION] El get y set de elementoDetectados no tiene porque ser expuesto
 	public ArrayList<Elemento> getElementosDetectados() {
 		return elementosDetectados;
 	}
 
 	public void setElementosDetectados(ArrayList<Elemento> elementosDetectados) {
 		this.elementosDetectados = elementosDetectados;
-	}
+	}*/
 
-	public void dispararMunicion(Robot robot, int direccion){
-		new Municion(robot, direccion);
+	public void dispararMunicion(int direccion){
+		//TODO [CORRECCION] y no agregan la municion al escenario?
+		Escenario.getEscenario().addElemento(new Municion(this, direccion));
 		this.cantidadMuniciones--;
 	}
 
 	public void lanzarBomba(Robot robot, int direccion){
-		new Bomba(robot, direccion);
+		//TODO [CORRECCION] y no agregan la bomba al escenario?
+		Escenario.getEscenario().addElemento(new Bomba(this, direccion));
 		this.cantidadBombas--;
 	}
 	
@@ -99,14 +129,21 @@ public abstract class Robot extends Movible implements RadarListener {
 	
 	@Override
 	public void elementosDetectados(ArrayList<Elemento> elementos) {
-		this.setElementosDetectados(elementos);
+		//this.setElementosDetectados(elementos);					//TODO Ver
 		System.out.println(String.format("Robot %s detectó elementos", this.equipo));
 	}
-
+	
 	@Override
+	/**
+	 * Método que permite avanzar ubicando el robot en su nueva ubicación teniendo en cuenta
+	 * la dirección y velocidad del mismo. Cada vez que avanza, decrementa su nivel de energía
+	 * y, si carga a una persona, el consumo se duplica.
+	 */
 	public void avanzar() {
-		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
-				this.getDireccion(), Config.ROBOT_VELOCIDAD));
+		//TODO [CORRECCION] El calculo basico de como avanzar deberia estar en Movible
+		//this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
+		//		this.getDireccion(), Config.ROBOT_VELOCIDAD));
+		super.avanzar();
 		if (this.persona){
 			this.nivelEnergia--;
 		}
@@ -152,10 +189,12 @@ public abstract class Robot extends Movible implements RadarListener {
 			this.nivelEscudo -= b.getDanio();
 		}
 		if (elemento instanceof BonusBateria){
-			this.nivelEnergia += Config.BONUS_ENERGIA;
+			BonusBateria b = (BonusBateria)elemento; 
+			this.nivelEnergia += b.getEnergia();	// TODO [CORRECCION] Usar valores del objeto
 		}
 		if (elemento instanceof BonusEscudo){
-			this.nivelEscudo += Config.BONUS_ESCUDO;
+			BonusEscudo b = (BonusEscudo)elemento;
+			this.nivelEscudo += b.getEscudo();	// TODO [CORRECCION] Usar valores del objeto
 		}
 	}
 	
@@ -163,6 +202,7 @@ public abstract class Robot extends Movible implements RadarListener {
 	public void jugar() {
 		if (this.estaVivo()){
 			this.radar.escanear();
+			this.calcularDirecciones();
 			this.definirEstrategia();
 			if (this.nivelEnergia > 0){
 				this.avanzar();
@@ -172,9 +212,14 @@ public abstract class Robot extends Movible implements RadarListener {
 		}
 	}
 
+	private void calcularDirecciones() {
+		// TODO Calcular direcciones en base a los elementos detectados
+		
+	}
+
 	public void definirEstrategia() {
 		if (this.cantidadMuniciones > 0){
-			this.dispararMunicion(this, this.getDireccion());
+			this.dispararMunicion(this.direccionDisparo);
 		}
 		if (this.cantidadBombas > 0){
 			if ((Math.random()*10)>9.0){
@@ -185,9 +230,8 @@ public abstract class Robot extends Movible implements RadarListener {
 
 	@Override
 	public String toString() {
-		return "Robot " + equipo + ": Escudos=" + nivelEscudo + ", Energía=" + nivelEnergia
-				+ ", Municiones=" + cantidadMuniciones + ", Bombas=" + cantidadBombas + "]";
+		return "Robot " + this.equipo + ": Escudos=" + this.nivelEscudo + ", Energía=" + this.nivelEnergia +
+				", Municiones=" + this.cantidadMuniciones + ", Bombas=" + this.cantidadBombas +
+				", Posición=" + this.getPosicion();
 	}
-	
-	
 }

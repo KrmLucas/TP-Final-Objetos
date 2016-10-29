@@ -34,7 +34,7 @@ public class Config {
 	public static final int BONUS_ALTO = 10;
 	public static final int BONUS_ESCUDO = 5;
 	public static final int BONUS_ENERGIA = 5;
-	
+	public static final int BONUS_VIDA = 50;
 
 	// Municion
 	public static final int MUNICION_ANCHO = 2;

@@ -1,25 +1,32 @@
+//CORREGIDO
+
 /**
- * 
- * @author Trabajo
+ * Clase abstracta que generaliza el comportamiento de los elementos movibles que participan del juego
+ * @author Krmpotic-Saiegg
  *
  */
 public abstract class Movible extends Elemento implements HaceDanio{
 	
 	private int direccion;
 	private int velocidad;
-	private int danio;
+	private int danio; //TODO [CORRECCION] Danio?! para que se utiliza?
+	// Es el danio que provoca todo elemento movible al chocar. Necesario para la implementación de 
+	// la interface HaceDanio
 	
 	public Movible(){
 		super();
-		this.direccion = 0;
-		this.velocidad = 0;
-		this.danio = 0;
+		this.direccion = 10;
+		this.velocidad = 1;
+		this.danio = 1;
 	}
 	
 	/**
 	 * Cada elemento movible deberá implementar su forma de avanzar
 	 */
-	public abstract void avanzar();
+	public void avanzar(){			//TODO [CORRECCION] El movible deberia saber avanzar
+		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
+				this.getDireccion(), this.velocidad));
+	}
 	
 	/**
 	 * Todo elemento movible provoca un daño a quien lo choca

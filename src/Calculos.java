@@ -1,3 +1,5 @@
+import java.awt.Rectangle;
+
 class Calculos {
 	
 	public static final Posicion Centro(Elemento elemento){
@@ -26,5 +28,15 @@ class Calculos {
 		if (deltaY < 0)
 			angulo = 360 - angulo;
 		return angulo;
+	}
+	
+	public static int rebotar(int direccion){
+		return 180 - direccion;
+	}
+
+	public static Rectangle area(Elemento e) {
+		Rectangle r = new Rectangle(e.getPosicion().getX(), e.getPosicion().getY(),
+						e.getTamanio().getAncho(), e.getTamanio().getAlto());
+		return r;
 	}
 }

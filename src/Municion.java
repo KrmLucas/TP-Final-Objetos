@@ -1,3 +1,5 @@
+//CORREGIDO
+
 /**
  * Clase que implementa la munición disparada por un Robot o un Satélite
  *  
@@ -8,8 +10,8 @@
  */
 public class Municion extends Movible{
 	
-	//private int danio;
 	private Elemento elemento;
+	private int velocidad;
 	
 	/**
 	 * Constructor privado que setea los valores de la munición
@@ -17,10 +19,13 @@ public class Municion extends Movible{
 	 */
 	private Municion(Elemento elemento){
 		super();
+		
+		//TODO [CORRECCION] Falta guardar la referencia del elemento "padre"
 		this.setPosicion(Calculos.Centro(this.elemento));
-		this.setTamanio(new Tamanio(ConfigOld.MUNICION_ANCHO ,ConfigOld.MUNICION_ALTO));
-		//this.danio = Config.MUNICION_DANIO;
-		this.setDanio(ConfigOld.MUNICION_DANIO);
+		this.setTamanio(new Tamanio(Config.MUNICION_ANCHO ,Config.MUNICION_ALTO));
+		this.setDanio(Config.MUNICION_DANIO);
+		this.velocidad = Config.MUNICION_VELOCIDAD;
+		this.elemento = elemento;
 	}
 	
 	/**
@@ -30,7 +35,7 @@ public class Municion extends Movible{
 	 */
 	public Municion(Elemento elemento, int direccion){
 		this(elemento);
-		this.elemento = elemento;
+		//this.elemento = elemento; //TODO [CORRECCION] Esto deberia estar en el otro constructor
 		this.setDireccion(direccion);
 	}
 
@@ -39,8 +44,10 @@ public class Municion extends Movible{
 	 * Método que setea la nueva posición donde quedará ubicada la munición después de avanzar
 	 */
 	public void avanzar() {
+		//TODO [CORRECCION] La lógica basica de avanzar deberia estar en Movible.
+		//TODO [CORRECCION] No deben utiliar ConfigOld.MUNICION_VELOCIDAD sino el atributo de esta municion
 		this.setPosicion(Calculos.getNewPosicion(this.getPosicion(), 
-							this.getDireccion(), ConfigOld.MUNICION_VELOCIDAD));
+							this.getDireccion(), this.velocidad));
 	}
 
 	@Override
@@ -69,6 +76,6 @@ public class Municion extends Movible{
 
 	@Override
 	public String toString() {
-		return "Munición: Posición=" + super.toString();
+		return "Munición: " + super.toString();
 	}
 }
