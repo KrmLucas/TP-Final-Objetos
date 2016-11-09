@@ -52,7 +52,7 @@ public class Config {
 		
 	// Radar
 	public static final int RADAR_ALCANCE_MAX = 200;
-	public static final int RADAR_ALCANCE_MIN = 20;
+	public static final int RADAR_ALCANCE_MIN = 200;
 	public static final int RADAR_ANGULO_APERTURA = 40;
 	public static final int RADAR_DIRECCION = 40;
 	

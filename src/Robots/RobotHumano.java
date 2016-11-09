@@ -18,6 +18,7 @@ public class RobotHumano extends Robot{
 		refugio.setPosicion(p);
 		Escenario.getEscenario().addElemento(refugio);
 		//p.setY(Config.REFUGIO_ALTO + 300);
+		
 		this.setPosicion(r);	
 	}
 	@Override

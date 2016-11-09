@@ -75,7 +75,7 @@ public class Tablero extends Canvas implements KeyListener{
 				this.getG2D().drawImage(imagenElemento, e.getPosicion().getX(), e.getPosicion().getY(), null);
 				if(e instanceof Robot){
 					Polygon poligono = ((Robot) e).getRadar().getZonaDeteccion();
-					this.paintPolygon().drawPolyline(poligono.xpoints, poligono.ypoints, poligono.npoints);	
+					this.getG2D().drawPolygon(poligono);	
 				}
 			}
 		}

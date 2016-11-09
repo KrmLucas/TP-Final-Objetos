@@ -6,7 +6,9 @@ import java.util.Iterator;
 import Configuracion.Config;
 import Core.Escenario;
 import Elementos.Elemento;
+import Elementos.Robot;
 import Interfaces.RadarListener;
+import Robots.RobotHumano;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
@@ -22,7 +24,6 @@ public class Radar {
 	private double anguloApertura;
 	private double alcance;
 	private double direccion;
-	private Polygon zonaDeteccion;
 	private Elemento duenio;
 	private Escenario escenario;
 	private ArrayList<Elemento> elementosDetectados; 
@@ -40,7 +41,7 @@ public class Radar {
 		this.direccion = Config.RADAR_DIRECCION;
 		this.duenio = elemento;
 		this.escenario = Escenario.getEscenario();
-		this.zonaDeteccion = new Polygon();
+
 	}
 	
 	/**
@@ -50,31 +51,7 @@ public class Radar {
 	 */
 	public void escanear(){
 		
-		//ArrayList<Elemento> detectados = new ArrayList<Elemento>();
-		
-		
-		//TODO [MEJORA] Si van a utilizar muchas veces el mismo x e y, seria interesanto ponerlas en variables locales
-		//asi el código queda mucho mas entendible.
-		
-		// armamos zona de deteccion.
-		Polygon zona = new Polygon();
-		
-		int x = this.getDuenio().getPosicionX();
-		int y = this.getDuenio().getPosicionY();
-		
-		zona.addPoint(x,y);
-		for (double i = (this.getDireccion() - (this.getAnguloApertura()/2)); 
-					 i< (this.getDireccion() + (this.getAnguloApertura()/2));
-					 i++){
-			
-			zona.addPoint((int)(Math.cos(Math.toRadians(i) * this.getAlcance())), 
-								   (int)(Math.sin(Math.toRadians(i) * this.getAlcance())));
-		}
-		zona.addPoint(x,y);
-		
-		//Nuevo
-		this.zonaDeteccion = zona;
-		this.elementosDetectados = this.escenario.detectarElementos(zona);
+		this.elementosDetectados = this.escenario.detectarElementos(getZonaDeteccion());
 		
 		// Hasta acá
 
@@ -108,7 +85,50 @@ public class Radar {
 		return anguloApertura;
 	}
 	public Polygon getZonaDeteccion(){
-		return this.zonaDeteccion;
+		
+		
+		//ArrayList<Elemento> detectados = new ArrayList<Elemento>();
+		
+		
+				//TODO [MEJORA] Si van a utilizar muchas veces el mismo x e y, seria interesanto ponerlas en variables locales
+				//asi el código queda mucho mas entendible.
+				
+				// armamos zona de deteccion.
+				Polygon zona = new Polygon();
+				
+				int x = this.getDuenio().getPosicionX();
+				int y = this.getDuenio().getPosicionY();
+				
+				double direccion = this.getDireccion();
+				
+				if (this.getDuenio() instanceof Robot)
+					direccion += ((Robot)this.getDuenio()).getDireccion();
+				
+				zona.addPoint(x,y);
+				for (double i = (direccion - (this.getAnguloApertura()/2)); 
+							 i< (direccion + (this.getAnguloApertura()/2));
+							 i += 2){
+					
+					double angulo = Math.toRadians(i);
+					
+					int x1 = (int)(Math.cos(angulo) * this.getAlcance() + x);
+					int y1 = (int)(Math.sin(angulo) * this.getAlcance() + y);
+					
+					zona.addPoint(x1, y1);
+				}
+				
+				zona.addPoint(x,y);
+				
+/*
+				zona = new Polygon();
+				
+				zona.addPoint(x, y);
+				zona.addPoint(x+100, y);
+				zona.addPoint(x+100, y+100);
+				 
+				zona.addPoint(x, y);
+	*/			 	
+		return zona;
 	}
 
 	public void setAnguloApertura(double anguloApertura) {
